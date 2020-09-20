@@ -4,6 +4,8 @@ using KeyChecker.Application.Models;
 using KeyChecker.Domain;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,23 +27,28 @@ namespace KeyChecker.Application
         {
             _keyRepository = keyRepository ?? throw new ArgumentNullException(nameof(keyRepository));
 
-            _applicationRepository = applicationRepository ?? 
+            _applicationRepository = applicationRepository ??
                 throw new ArgumentNullException(nameof(applicationRepository));
 
             _logger = logger;
         }
 
+        #region Public методы, они же - методы приложения
+        /// <summary>
+        /// Проверяет что предоставленный ключ от приложения делающего запрос
+        /// существует целевого приложения
+        /// </summary>
         public async ValueTask<bool> ValidateKey(
-            ApplicationCodeAuthKeyValidateRequest request, 
+            ApplicationCodeAuthKeyValidateRequest request,
             CancellationToken token = default)
         {
-            if(request is null)
+            if (request is null)
             {
                 _logger?.LogError(requestBodyIsNull);
                 throw new ArgumentNullException(nameof(request), requestBodyIsNull);
             }
 
-            var application = 
+            var application =
                 await _applicationRepository.GetApplicationByCodeAsync(request.RequestingApplicationCode, token);
 
             if (application is NoKeyApplication)
@@ -74,5 +81,76 @@ namespace KeyChecker.Application
                 _ => throw new Exception("Не знаю как обработать ключ")
             };
         }
+
+        /// <summary>
+        /// Отдаёт список известных приложений
+        /// </summary>
+        /// <returns>Список кодов и uid зарегестрированых приложений</returns>
+        public async Task<IEnumerable<KeyApplication>> GetAllKnownApplicationsAsync(CancellationToken token = default)
+            => await _applicationRepository.GetAllKnownApplicationsAsync(token);
+
+        /// <summary>
+        /// Получает список приложений имеющих аутентификационные ключи к приложению указанному в аргументе
+        /// </summary>
+        /// <param name="applicationCode">Код приложения для которого получаем список приложений 
+        /// которые могут сделать к нему запрос</param>
+        /// <returns>Список кодов и uid зарегестрированых приложений</returns>
+        public async Task<IEnumerable<KeyApplication>> GetPermittedApplicationsAsync(
+            ApplicationCode applicationCode,
+            CancellationToken token = default)
+        {
+            var application = await _applicationRepository.GetApplicationByCodeAsync(applicationCode, token);
+
+            if (application is NoKeyApplication)
+                return Enumerable.Empty<KeyApplication>();
+
+            return await GetRegisteredApplicationsAsync(application, token);
+        }
+
+        /// <summary>
+        /// Получает список приложений имеющих аутентификационные активные ключи к приложению указанному в аргументе
+        /// </summary>
+        /// <param name="applicationUid">Uid приложения для которого получаем список приложений</param>
+        /// <returns>Список кодов и uid зарегестрированых приложений</returns>
+        public async Task<IEnumerable<KeyApplication>> GetPermittedApplicationsAsync(
+            Guid applicationUid,
+            CancellationToken token = default)
+        {
+            var application = await _applicationRepository.GetApplicationByUidAsync(applicationUid, token);
+
+            if (application is NoKeyApplication)
+                return Enumerable.Empty<KeyApplication>();
+
+            return await GetRegisteredApplicationsAsync(application, token);
+        }
+        #endregion
+
+        #region Внутренние методы приложения
+        /// <summary>
+        /// Получаем связанные приложения с приложением из аргумента
+        /// Связанное приложение должно иметь при этом активный аутентификационный ключ
+        /// </summary>
+        /// <param name="application">Приложение к которому ищем связанные приложения</param>
+        private async Task<KeyApplication[]> GetRegisteredApplicationsAsync(
+            KeyApplication application,
+            CancellationToken token = default)
+        {
+            var bindedApplicationList = (await _applicationRepository.GetKnownApplicationsAsync(application, token))
+                .ToArray();
+
+            // фильтруем аппы, нам нужны только те, кто имеет включенный ключ
+
+            var result = new List<KeyApplication>(bindedApplicationList.Length);
+            foreach (var bindedApplication in bindedApplicationList)
+            {
+                if (await _keyRepository.IsHaveActiveAuthKey(bindedApplication, application, token))
+                {
+                    result.Add(bindedApplication);
+                }
+            }
+
+            return result.ToArray();
+        } 
+        #endregion
     }
 }

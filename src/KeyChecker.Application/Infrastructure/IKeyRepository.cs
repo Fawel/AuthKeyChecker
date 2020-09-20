@@ -17,5 +17,15 @@ namespace KeyChecker.Application.Infrastructure
         /// <param name="key">Аутентификационный ключ и приложение, которое запрашивает проверку</param>
         /// <returns>Информация об аутентификационном ключе</returns>
         Task<AuthKey> GetApplicationForKeyAsync(ApplicationWithKey key, CancellationToken token = default);
+        
+        /// <summary>
+        /// Узнает есть ли хотя бы один включенный аутентификационный ключ между двумя приложениями
+        /// </summary>
+        /// <param name="application">Проверяемое приложение</param>
+        /// <param name="targetApplication">Приложение к которому нужно иметь доступ</param>
+        ValueTask<bool> IsHaveActiveAuthKey(
+            KeyApplication application,
+            KeyApplication targetApplication,
+            CancellationToken token = default);
     }
 }
