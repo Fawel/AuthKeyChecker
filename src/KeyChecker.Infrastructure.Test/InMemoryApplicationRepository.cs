@@ -7,6 +7,9 @@ using KeyChecker.Domain;
 
 namespace KeyChecker.Infrastructure.TestImplementation
 {
+    /// <summary>
+    /// Тестовая имплементация репозитория приложений в памяти
+    /// </summary>
     public class InMemoryApplicationRepository : IApplicationRepository
     {
         private readonly Dictionary<ApplicationCode, KeyApplication> _codeDictionary =

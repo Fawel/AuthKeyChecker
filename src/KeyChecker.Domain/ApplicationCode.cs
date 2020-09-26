@@ -4,6 +4,9 @@ using System.Text;
 
 namespace KeyChecker.Domain
 {
+    /// <summary>
+    /// Код приложения. Является строкой, не пустой и не состояшей только из пробелов
+    /// </summary>
     public struct ApplicationCode
     {
         private readonly string _value;

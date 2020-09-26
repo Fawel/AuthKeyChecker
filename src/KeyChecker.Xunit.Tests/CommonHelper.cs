@@ -40,6 +40,10 @@ namespace KeyChecker.Xunit.Tests
             return !enumerator.MoveNext();
         }
 
+        /// <summary>
+        /// Проверяет равенство двух списков приложений
+        /// Делается предположение, что списки состоят из уникальных значений
+        /// </summary>
         public bool CheckIsApplicationListsEqual(
             IEnumerable<KeyApplication> firstApplicationList,
             IEnumerable<KeyApplication> secondApplicationList)

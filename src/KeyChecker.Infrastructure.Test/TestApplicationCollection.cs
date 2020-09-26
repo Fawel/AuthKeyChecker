@@ -5,6 +5,9 @@ using System.Text;
 
 namespace KeyChecker.Infrastructure.TestImplementation
 {
+    /// <summary>
+    /// Список созданных приложений для внутреннего заполнения в тестовых реализациях репозиториев
+    /// </summary>
     internal static class TestApplicationCollection
     {
         public static KeyApplication[] KeyApplications =

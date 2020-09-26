@@ -5,6 +5,9 @@ using System.Text;
 
 namespace KeyChecker.Application.Infrastructure.Models
 {
+    /// <summary>
+    /// Модель для запроса наличия ключа между двумя приложениями
+    /// </summary>
     public class ApplicationWithKey
     {
         /// <summary>

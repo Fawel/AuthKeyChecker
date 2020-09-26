@@ -21,6 +21,10 @@ namespace KeyChecker.Xunit.Tests
             _commonHelper = commonHelper;
         }
 
+        /// <summary>
+        /// Ситуация: репозитарий известны два приложения
+        /// Ожидаемый результат: метод вернул список из тех же двух известных приложений
+        /// </summary>
         [Fact]
         public async Task GetAllApps_ReturnResultFromRepo()
         {

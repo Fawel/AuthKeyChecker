@@ -23,6 +23,10 @@ namespace KeyChecker.Xunit.Tests
             _commonHelper = commonHelper;
         }
 
+        /// <summary>
+        /// Ситуация: Не найдено приложение запрашивающее доступ
+        /// Ожидаемый результат: false
+        /// </summary>
         [Fact]
         public async Task ValidateKey_NoRequestingApplication_ReturnFalse()
         {
@@ -59,6 +63,11 @@ namespace KeyChecker.Xunit.Tests
             Assert.True(result is false);
         }
 
+        /// <summary>
+        /// Ситуация: не найдено приложение к которому запрашивают доступ
+        /// Ожидаемый результат: false
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task ValidateKey_NoTargetApplication_ReturnFalse()
         {
@@ -89,6 +98,10 @@ namespace KeyChecker.Xunit.Tests
             Assert.True(result is false);
         }
 
+        /// <summary>
+        /// Ситуация: нет ключа между запрашивающим приложением и целевым
+        /// Ожидаемый результат: false
+        /// </summary>
         [Fact]
         public async Task ValidateKey_NoKey_ReturnNoAuthKey()
         {
@@ -127,7 +140,8 @@ namespace KeyChecker.Xunit.Tests
         }
 
         /// <summary>
-        /// Смотрим что при проверке ключа правильно смотрим на включённость ключа
+        /// Ситуации: между приложениями есть ключ. В первом случае - активный, во втором - вырубленный
+        /// Ожидаемый результат: true в первом случае, false во втором случае
         /// </summary>
         [Theory(DisplayName = "ValidateKey_KeyStatus")]
         [InlineData(true)]
@@ -156,7 +170,7 @@ namespace KeyChecker.Xunit.Tests
             var keyRepoMock = new Mock<IKeyRepository>();
             keyRepoMock.Setup(x => x.GetApplicationForKeyAsync(It.IsAny<ApplicationWithKey>(), default))
                 .Returns(() => Task.FromResult<AuthKey>(
-                    new FoundAuthKey(authKeyValue, keyIsEnabled, application, targetApplication)));
+                    new ExistingAuthKey(authKeyValue, keyIsEnabled, application, targetApplication)));
 
             var validator = _commonHelper.InitValidator(repoMock.Object, keyRepoMock.Object);
 

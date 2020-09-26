@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 
 namespace KeyChecker.Application
 {
+    /// <summary>
+    /// Сервис для проверки доступа приложений друг к другу по аутентификационному ключу
+    /// а также получения списка известных приложений с наличием такого доступа
+    /// </summary>
     public class AuthKeyValidator
     {
         private readonly IKeyRepository _keyRepository;
@@ -77,7 +81,7 @@ namespace KeyChecker.Application
             return authResult switch
             {
                 NoAuthKey _ => false,
-                FoundAuthKey key => key.Enabled,
+                ExistingAuthKey key => key.Enabled,
                 _ => throw new Exception("Не знаю как обработать ключ")
             };
         }

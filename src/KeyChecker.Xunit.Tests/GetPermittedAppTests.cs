@@ -10,7 +10,7 @@ using Xunit;
 namespace KeyChecker.Xunit.Tests
 {
     /// <summary>
-    /// GetPermittedApplicationsAsync
+    /// Тесты для метода GetPermittedApplicationsAsync
     /// </summary>
     public class GetPermitedApplicationsTests : IClassFixture<CommonHelper>
     {
@@ -22,6 +22,10 @@ namespace KeyChecker.Xunit.Tests
         }
 
         #region ApplicationCode tests
+        /// <summary>
+        /// Ситуация: приложения, для которого ищем связанные, неизвестно
+        /// Ожидаемый результат: пустой список
+        /// </summary>
         [Fact]
         public async Task GetApp_RequestedAppNotFound_ReturnEmptyList()
         {
@@ -44,6 +48,10 @@ namespace KeyChecker.Xunit.Tests
             Assert.True(_commonHelper.CheckIsEmpty(result));
         }
 
+        /// <summary>
+        /// Ситуация: у приложения два связанных приложения, одно с активным ключом, другое - с выключенным
+        /// Ожидаемый результат: метод получил список с одним элементом - приложением с активным ключом
+        /// </summary>
         [Fact]
         public async Task GetApp_2BindedApp1Disabled_Return1ActiveApp()
         {
@@ -88,6 +96,11 @@ namespace KeyChecker.Xunit.Tests
         #endregion
 
         #region ApplicationUid tests
+
+        /// <summary>
+        /// Ситуация: приложения, для которого ищем связанные, неизвестно
+        /// Ожидаемый результат: пустой список
+        /// </summary>
         [Fact]
         public async Task GetAppForUid_RequestedAppNotFound_ReturnEmptyList()
         {
@@ -110,6 +123,10 @@ namespace KeyChecker.Xunit.Tests
             Assert.True(_commonHelper.CheckIsEmpty(result));
         }
 
+        /// <summary>
+        /// Ситуация: у приложения два связанных приложения, одно с активным ключом, другое - с выключенным
+        /// Ожидаемый результат: метод получил список с одним элементом - приложением с активным ключом
+        /// </summary>
         [Fact]
         public async Task GetAppByUid_2BindedApp1Disabled_Return1ActiveApp()
         {

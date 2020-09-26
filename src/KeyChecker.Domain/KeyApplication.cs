@@ -50,6 +50,9 @@ namespace KeyChecker.Domain
         }
     }
 
+    /// <summary>
+    /// Объект ненайденного приложения с доступом по ключу
+    /// </summary>
     public class NoKeyApplication : KeyApplication
     {
         private readonly static ApplicationCode _noAppName = "noApp";

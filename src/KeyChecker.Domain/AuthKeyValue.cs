@@ -2,6 +2,10 @@
 
 namespace KeyChecker.Domain
 {
+    /// <summary>
+    /// Значение аутентификационного ключа.
+    /// Представляет собой непустую строку, не состоящую целиком из пробельных символов
+    /// </summary>
     public struct AuthKeyValue : IEquatable<AuthKeyValue>
     {
         private readonly string _value;

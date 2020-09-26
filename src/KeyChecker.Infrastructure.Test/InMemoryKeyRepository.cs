@@ -9,6 +9,9 @@ using System.Threading;
 
 namespace KeyChecker.Infrastructure.TestImplementation
 {
+    /// <summary>
+    /// Тестовая имплементация репозитория ключей в памяти
+    /// </summary>
     public class InMemoryKeyRepository : IKeyRepository
     {
         private readonly Dictionary<ApplicationWithKey, AuthKey> _keyDictionary =
@@ -28,7 +31,7 @@ namespace KeyChecker.Infrastructure.TestImplementation
                         app,
                         authKeyValue);
 
-                    AuthKey key = new FoundAuthKey(
+                    AuthKey key = new ExistingAuthKey(
                         authKeyValue,
                         true,
                         TestApplicationCollection.KeyApplications[i],
@@ -53,7 +56,7 @@ namespace KeyChecker.Infrastructure.TestImplementation
         {
             foreach(var appKeyRow in _keyDictionary)
             {
-                var authKey = (FoundAuthKey)appKeyRow.Value;
+                var authKey = (ExistingAuthKey)appKeyRow.Value;
                 var app = appKeyRow.Key;
 
                 if(app.TargetApplication != targetApplication &&
