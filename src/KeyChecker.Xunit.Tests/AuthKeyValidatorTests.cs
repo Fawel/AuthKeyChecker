@@ -11,9 +11,15 @@ using Xunit;
 
 namespace KeyChecker.Xunit.Tests
 {
-    public class AuthKeyValidatorTests
+    public class AuthKeyValidatorTests: IClassFixture<CommonHelper>
     {
-        #region ValidateKey Tests
+        private readonly CommonHelper _commonHelper;
+
+        public AuthKeyValidatorTests(CommonHelper commonHelper)
+        {
+            _commonHelper = commonHelper;
+        }
+
         [Fact]
         public async Task ValidateKey_NoRequestingApplication_ReturnFalse()
         {
@@ -37,7 +43,7 @@ namespace KeyChecker.Xunit.Tests
             keyRepoMock.Setup(x => x.GetApplicationForKeyAsync(It.IsAny<ApplicationWithKey>(), default))
                 .Throws(new Exception("Мы не должны доходить до проверки ключа"));
 
-            var validator = InitValidator(repoMock.Object, keyRepoMock.Object);
+            var validator = _commonHelper.InitValidator(repoMock.Object, keyRepoMock.Object);
 
             // ACT
 
@@ -71,7 +77,7 @@ namespace KeyChecker.Xunit.Tests
             keyRepoMock.Setup(x => x.GetApplicationForKeyAsync(It.IsAny<ApplicationWithKey>(), default))
                 .Throws(new Exception("Мы не должны доходить до проверки ключа"));
 
-            var validator = InitValidator(repoMock.Object, keyRepoMock.Object);
+            var validator = _commonHelper.InitValidator(repoMock.Object, keyRepoMock.Object);
 
             var requestModel =
                 new ApplicationCodeAuthKeyValidateRequest(applicationCode, targetApplicationCode, authKeyValue);
@@ -104,7 +110,7 @@ namespace KeyChecker.Xunit.Tests
             keyRepoMock.Setup(x => x.GetApplicationForKeyAsync(It.IsAny<ApplicationWithKey>(), default))
                 .Returns(() => Task.FromResult<AuthKey>(AuthKey.NoKey));
 
-            var validator = InitValidator(repoMock.Object, keyRepoMock.Object);
+            var validator = _commonHelper.InitValidator(repoMock.Object, keyRepoMock.Object);
 
             // ACT
 
@@ -149,7 +155,7 @@ namespace KeyChecker.Xunit.Tests
                 .Returns(() => Task.FromResult<AuthKey>(
                     new FoundAuthKey(authKeyValue, keyIsEnabled, application, targetApplication)));
 
-            var validator = InitValidator(repoMock.Object, keyRepoMock.Object);
+            var validator = _commonHelper.InitValidator(repoMock.Object, keyRepoMock.Object);
 
             // ACT
 
@@ -160,20 +166,6 @@ namespace KeyChecker.Xunit.Tests
             // ASSERT
 
             Assert.Equal(keyIsEnabled, result);
-        } 
-        #endregion
-
-        private AuthKeyValidator InitValidator(
-            IApplicationRepository appRepo = default,
-            IKeyRepository keyRepo = default,
-            ILogger<AuthKeyValidator> logger = default
-            )
-        {
-            var repoMock = appRepo ?? Mock.Of<IApplicationRepository>();
-            var keyMock = keyRepo ?? Mock.Of<IKeyRepository>();
-            var loggerMock = logger ?? Mock.Of<ILogger<AuthKeyValidator>>();
-
-            return new AuthKeyValidator(keyMock, repoMock, loggerMock);
         }
     }
 }
