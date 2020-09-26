@@ -7,7 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyChecker.Application", "K
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyChecker.Domain", "KeyChecker.Domain\KeyChecker.Domain.csproj", "{1812D56F-1F5A-4159-A837-C22E4300C041}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyChecker.Infrastructure.TestImplementation", "KeyChecker.Infrastructure.Test\KeyChecker.Infrastructure.TestImplementation.csproj", "{BB2CC84E-C251-46A4-88EC-04AB6F88E146}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyChecker.Infrastructure.TestImplementation", "KeyChecker.Infrastructure.Test\KeyChecker.Infrastructure.TestImplementation.csproj", "{BB2CC84E-C251-46A4-88EC-04AB6F88E146}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyChecker.ConsoleTestApp", "KeyChecker.ConsoleTestApp\KeyChecker.ConsoleTestApp.csproj", "{97489F04-7306-4240-AA88-D44425888A1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyChecker.Xunit.Tests", "KeyChecker.Xunit.Tests\KeyChecker.Xunit.Tests.csproj", "{FB079655-39E9-414D-93CB-27C4B98E7055}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +59,30 @@ Global
 		{BB2CC84E-C251-46A4-88EC-04AB6F88E146}.Release|x64.Build.0 = Release|Any CPU
 		{BB2CC84E-C251-46A4-88EC-04AB6F88E146}.Release|x86.ActiveCfg = Release|Any CPU
 		{BB2CC84E-C251-46A4-88EC-04AB6F88E146}.Release|x86.Build.0 = Release|Any CPU
+		{97489F04-7306-4240-AA88-D44425888A1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97489F04-7306-4240-AA88-D44425888A1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97489F04-7306-4240-AA88-D44425888A1D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{97489F04-7306-4240-AA88-D44425888A1D}.Debug|x64.Build.0 = Debug|Any CPU
+		{97489F04-7306-4240-AA88-D44425888A1D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{97489F04-7306-4240-AA88-D44425888A1D}.Debug|x86.Build.0 = Debug|Any CPU
+		{97489F04-7306-4240-AA88-D44425888A1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97489F04-7306-4240-AA88-D44425888A1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97489F04-7306-4240-AA88-D44425888A1D}.Release|x64.ActiveCfg = Release|Any CPU
+		{97489F04-7306-4240-AA88-D44425888A1D}.Release|x64.Build.0 = Release|Any CPU
+		{97489F04-7306-4240-AA88-D44425888A1D}.Release|x86.ActiveCfg = Release|Any CPU
+		{97489F04-7306-4240-AA88-D44425888A1D}.Release|x86.Build.0 = Release|Any CPU
+		{FB079655-39E9-414D-93CB-27C4B98E7055}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB079655-39E9-414D-93CB-27C4B98E7055}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB079655-39E9-414D-93CB-27C4B98E7055}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FB079655-39E9-414D-93CB-27C4B98E7055}.Debug|x64.Build.0 = Debug|Any CPU
+		{FB079655-39E9-414D-93CB-27C4B98E7055}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FB079655-39E9-414D-93CB-27C4B98E7055}.Debug|x86.Build.0 = Debug|Any CPU
+		{FB079655-39E9-414D-93CB-27C4B98E7055}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB079655-39E9-414D-93CB-27C4B98E7055}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB079655-39E9-414D-93CB-27C4B98E7055}.Release|x64.ActiveCfg = Release|Any CPU
+		{FB079655-39E9-414D-93CB-27C4B98E7055}.Release|x64.Build.0 = Release|Any CPU
+		{FB079655-39E9-414D-93CB-27C4B98E7055}.Release|x86.ActiveCfg = Release|Any CPU
+		{FB079655-39E9-414D-93CB-27C4B98E7055}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

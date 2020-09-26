@@ -38,7 +38,7 @@ namespace KeyChecker.Application
         /// Проверяет что предоставленный ключ от приложения делающего запрос
         /// существует целевого приложения
         /// </summary>
-        public async ValueTask<bool> ValidateKey(
+        public async ValueTask<bool> ValidateKeyAsync(
             ApplicationCodeAuthKeyValidateRequest request,
             CancellationToken token = default)
         {
@@ -65,7 +65,7 @@ namespace KeyChecker.Application
             if (targetApplication is NoKeyApplication)
             {
                 _logger?.LogWarning(
-                    $"Не смогли найти приложение пытающееся получить доступ к запрашиваемому, " +
+                    $"Не смогли найти целевое приложение, " +
                     $"код приложения {request.TargetApplicationCode}");
 
                 return false;

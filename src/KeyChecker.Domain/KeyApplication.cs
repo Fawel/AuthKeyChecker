@@ -31,6 +31,23 @@ namespace KeyChecker.Domain
             Code = code;
             Uid = uid;
         }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Code, Uid);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if(!(obj is KeyApplication))
+            {
+                return false;
+            }
+
+            var convertedObj = (KeyApplication)obj;
+            return Uid == convertedObj.Uid &&
+                Code == convertedObj.Code;
+        }
     }
 
     public class NoKeyApplication : KeyApplication

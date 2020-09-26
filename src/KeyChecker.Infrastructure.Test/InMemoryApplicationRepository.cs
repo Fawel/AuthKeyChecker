@@ -20,7 +20,7 @@ namespace KeyChecker.Infrastructure.TestImplementation
 
         public InMemoryApplicationRepository()
         {
-            int index = 0;
+            int index = 1;
             // заполняем приложениями
             foreach (var app in TestApplicationCollection.KeyApplications)
             {
@@ -28,13 +28,16 @@ namespace KeyChecker.Infrastructure.TestImplementation
                 _uidDictionary.Add(app.Uid, app);
 
                 // "рисуем" связи между приложениями
-                var bindedApplications = new KeyApplication[TestApplicationCollection.KeyApplications.Length - index];
-                for (int i = 0; i < index; i++)
+                var bindedApplications = 
+                    new KeyApplication[TestApplicationCollection.KeyApplications.Length - index];
+
+                for (int i = index; i < bindedApplications.Length; i++)
                 {
                     bindedApplications[i] = TestApplicationCollection.KeyApplications[i];
                 }
 
                 _bindedAppDictionary.Add(app, bindedApplications);
+                index++;
             }
         }
 

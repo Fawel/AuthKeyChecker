@@ -31,5 +31,27 @@ namespace KeyChecker.Application.Infrastructure.Models
             Key = key;
             TargetApplication = targetApplication ?? throw new ArgumentNullException(nameof(targetApplication));
         }
+
+        public override bool Equals(object obj)
+        {
+            if(!(obj is ApplicationWithKey))
+            {
+                return false;
+            }
+
+            ApplicationWithKey convertedObj = (ApplicationWithKey)obj;
+
+            return RequestingApplication == convertedObj.RequestingApplication &&
+                TargetApplication == convertedObj.TargetApplication &&
+                Key == convertedObj.Key;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(
+                RequestingApplication.GetHashCode(),
+                TargetApplication.GetHashCode(),
+                Key);
+        }
     }
 }
