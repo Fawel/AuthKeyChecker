@@ -9,6 +9,9 @@ using Xunit;
 
 namespace KeyChecker.Xunit.Tests
 {
+    /// <summary>
+    /// GetPermittedApplicationsAsync
+    /// </summary>
     public class GetPermitedApplicationsTests : IClassFixture<CommonHelper>
     {
         private readonly CommonHelper _commonHelper;

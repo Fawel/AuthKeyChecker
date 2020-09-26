@@ -11,6 +11,9 @@ using Xunit;
 
 namespace KeyChecker.Xunit.Tests
 {
+    /// <summary>
+    /// ValidateKeyAsync
+    /// </summary>
     public class AuthKeyValidatorTests: IClassFixture<CommonHelper>
     {
         private readonly CommonHelper _commonHelper;
