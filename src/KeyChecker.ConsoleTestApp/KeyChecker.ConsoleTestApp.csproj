@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\KeyChecker.Api.Client\KeyChecker.Api.Client.csproj" />
     <ProjectReference Include="..\KeyChecker.Application\KeyChecker.Application.csproj" />
     <ProjectReference Include="..\KeyChecker.Infrastructure.Test\KeyChecker.Infrastructure.TestImplementation.csproj" />
   </ItemGroup>

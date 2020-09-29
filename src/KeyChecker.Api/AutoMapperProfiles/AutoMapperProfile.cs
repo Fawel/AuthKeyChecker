@@ -13,27 +13,10 @@ namespace KeyChecker.Api.AutoMapperProfiles
         public AutoMapperProfile()
         {
             CreateMap<ValidateKeyRequest, ApplicationCodeAuthKeyValidateRequest>()
-                .ForMember(
-                    z => z.Key,
-                    x =>
-                    {
-                        x.DoNotAllowNull();
-                        x.MapFrom(y => y.ApplicationCode);
-                    })
-                .ForMember(
-                    z => z.RequestingApplicationCode,
-                    x =>
-                    {
-                        x.DoNotAllowNull();
-                        x.MapFrom(y => y.ApplicationCode);
-                    })
-                .ForMember(
-                    z => z.TargetApplicationCode,
-                    x =>
-                    {
-                        x.DoNotAllowNull();
-                        x.MapFrom(y => y.TargetApplicationCode);
-                    });
+                .ConvertUsing(x => new ApplicationCodeAuthKeyValidateRequest(
+                    x.ApplicationCode,
+                    x.TargetApplicationCode,
+                    x.AuthKeyValue));
         }
     }
 }

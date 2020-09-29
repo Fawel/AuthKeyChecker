@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Text;
 
 namespace KeyChecker.Api.Models
 {
-    public class ValidateKeyRequest
+    public class ValidateKeyRequest : BasicRequest
     {
         public string ApplicationCode { get; set; }
         public string TargetApplicationCode { get; set; }
@@ -18,24 +19,32 @@ namespace KeyChecker.Api.Models
             string targetApplicationCode,
             string authKeyValue)
         {
-            if (string.IsNullOrWhiteSpace(applicationCode))
-            {
-                throw new ArgumentException("Код приложения не должен быть пуст", nameof(applicationCode));
-            }
-
-            if (string.IsNullOrWhiteSpace(targetApplicationCode))
-            {
-                throw new ArgumentException("Код приложения не должен быть пуст", nameof(targetApplicationCode));
-            }
-
-            if (string.IsNullOrWhiteSpace(authKeyValue))
-            {
-                throw new ArgumentException("Код ключа не должен быть пуст", nameof(authKeyValue));
-            }
-
             ApplicationCode = applicationCode;
             TargetApplicationCode = targetApplicationCode;
             AuthKeyValue = authKeyValue;
+        }
+
+        public override bool SelfValidate(out string message)
+        {
+            StringBuilder messageBuilder = new StringBuilder();
+
+            if (string.IsNullOrWhiteSpace(ApplicationCode))
+            {
+                messageBuilder.Append("Код приложения не должен быть пуст");
+            }
+
+            if (string.IsNullOrWhiteSpace(TargetApplicationCode))
+            {
+                messageBuilder.Append("Код целевого приложения не должен быть пуст");
+            }
+
+            if (string.IsNullOrWhiteSpace(AuthKeyValue))
+            {
+                messageBuilder.Append("Код ключа не должен быть пуст");
+            }
+
+            message = messageBuilder.ToString();
+            return string.IsNullOrWhiteSpace(message);
         }
     }
 }

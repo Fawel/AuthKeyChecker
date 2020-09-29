@@ -27,32 +27,23 @@ namespace KeyChecker.Api.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> ValidateKey(ValidateKeyRequest validateKeyRequest)
+        [HttpPost("validate")]
+        public async Task<IActionResult> ValidateKey([FromBody]ValidateKeyRequest validateKeyRequest)
         {
-            if(validateKeyRequest is null)
+            // валидация модели запроса
+            if (validateKeyRequest is null)
             {
                 _logger.LogWarning("В запрос на валидацию пришла пустая модель");
                 return BadRequest("В запрос пришла пустая модель");
             }
 
-            if(string.IsNullOrWhiteSpace(validateKeyRequest.ApplicationCode))
+            else if (!validateKeyRequest.SelfValidate(out var validateMessage))
             {
-                _logger.LogWarning("Запрос на валидацию имеет пустой код приложения");
-                return BadRequest("Запрос на валидацию имеет пустой код приложения");
+                _logger.LogWarning(validateMessage);
+                return BadRequest(validateMessage);
             }
 
-            else if(string.IsNullOrWhiteSpace(validateKeyRequest.TargetApplicationCode))
-            {
-                _logger.LogWarning("Запрос на валидацию имеет пустой код целевого приложения");
-                return BadRequest("Запрос на валидацию имеет пустой код целевого приложения");
-            }
-
-            else if(string.IsNullOrWhiteSpace(validateKeyRequest.AuthKeyValue))
-            {
-                _logger.LogWarning("Запрос на валидацию имеет пустое значение ключа валидации");
-                return BadRequest("Запрос на валидацию имеет пустое значение ключа валидации");
-            }
+            // собственно выполнение запроса
 
             var validateApplicationRequest = _mapper.Map<ApplicationCodeAuthKeyValidateRequest>(validateKeyRequest);
 
